@@ -55,7 +55,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.accdk79.mongodb.net/${process.env.DB_NAME}?appName=Cluster0`)
+  .connect(`mongodb+srv://leobertcamoro10_db_user:WwALwPdZcsK4Adb2@cluster0.accdk79.mongodb.net/mern?appName=Cluster0`)
   .then(() => {
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
