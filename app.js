@@ -39,17 +39,33 @@ app.use((req, res, next) => {
 });
 
 // error handling middleware
+// app.use((error, req, res, next) => {
+//   // this code will not save image to the folder if error for "user" and "place"
+//   if(req.file) {
+//     fs.unlink(req.file.path, (err) => {
+//       console.log(err);
+//     });
+//   }
+
+//   if (res.headerSent) {
+//     return next(error);
+//   }
+//   res.status(error.code || 500);
+//   res.json({ message: error.message || "An unknown error occurred!" });
+// });
+
 app.use((error, req, res, next) => {
-  // this code will not save image to the folder if error for "user" and "place"
-  if(req.file) {
+  // ✅ Only delete file if using local storage (remove this when using Cloudinary)
+  if(req.file && req.file.path && !req.file.path.startsWith('http')) {
     fs.unlink(req.file.path, (err) => {
-      console.log(err);
+      if (err) console.log('Could not delete file:', err);
     });
   }
 
   if (res.headerSent) {
     return next(error);
   }
+
   res.status(error.code || 500);
   res.json({ message: error.message || "An unknown error occurred!" });
 });
