@@ -56,11 +56,11 @@ app.use((req, res, next) => {
 
 app.use((error, req, res, next) => {
   // ✅ Only delete file if using local storage (remove this when using Cloudinary)
-  if(req.file && req.file.path && !req.file.path.startsWith('http')) {
-    fs.unlink(req.file.path, (err) => {
-      if (err) console.log('Could not delete file:', err);
-    });
-  }
+  // if(req.file && req.file.path && !req.file.path.startsWith('http')) {
+  //   fs.unlink(req.file.path, (err) => {
+  //     if (err) console.log('Could not delete file:', err);
+  //   });
+  // }
 
   if (res.headerSent) {
     return next(error);
