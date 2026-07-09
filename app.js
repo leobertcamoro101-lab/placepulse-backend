@@ -18,25 +18,34 @@ const app = express();
 app.use(bodyParser.json()); 
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
+// added because of combine deployment with React
+app.use(express.static(path.join('public')));
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-  );
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-  next();
-});
+// you can omit this we don't need this anymore or not to omit this no proble
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', '*');
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+//   );
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+//   next();
+// });
 
 app.use("/api/places", placesRoutes); // => /api/places
 app.use("/api/users", usersRoutes); // => /api/users
 
-// error handling middleware for unsupported routes
+// added because of combine deployment with React
 app.use((req, res, next) => {
-  const error = new HttpError("Could not find this route.", 404);
-  throw error;
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
+
+// remove because combine deployment with React
+// error handling middleware for unsupported routes
+// app.use((req, res, next) => {
+//   const error = new HttpError("Could not find this route.", 404);
+//   throw error;
+// });
 
 // error handling middleware
 // app.use((error, req, res, next) => {
