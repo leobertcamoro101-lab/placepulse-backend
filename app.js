@@ -73,7 +73,7 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.accdk79.mongodb.net/${process.env.DB_NAME}?appName=Cluster0`)
   .then(() => {
-    const PORT = process.env.PORT || 5000;
+    const PORT = process.env.PORT || 10000;
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
