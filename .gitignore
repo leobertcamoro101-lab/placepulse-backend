@@ -1,6 +1,5 @@
 node_modules
 .env
-public/.env.production
 uploads/images
 nodemon.json
 test.js
