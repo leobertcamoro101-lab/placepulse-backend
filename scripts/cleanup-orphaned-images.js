@@ -6,8 +6,8 @@ const Place = require('../models/place');
 const User = require('../models/user');
 
 const extractPublicId = (url) => {
-  // e.g. https://res.cloudinary.com/xxx/image/upload/v123/placepulse/abc123.jpg
-  const match = url.match(/mern\/([^/.]+)/);
+  // e.g. https://res.cloudinary.com/xxx/image/upload/v123/mern/abc123.jpg
+  const match = url.match(/\/mern\/([^/.]+)/);
   return match ? `mern/${match[1]}` : null;
 };
 
@@ -16,15 +16,26 @@ const run = async () => {
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.accdk79.mongodb.net/${process.env.DB_NAME}?appName=Cluster0`
   );
 
+  // ✅ Add these debug logs
+  console.log('DB_USER:', process.env.DB_USER);
+  console.log('DB_NAME:', process.env.DB_NAME);
+
   const places = await Place.find({}, 'image');
   const users = await User.find({}, 'image');
+
+  // ✅ Add these debug logs
+  console.log('Places found:', places.length);
+  console.log('Users found:', users.length);
+  console.log('Place images:', places.map(p => p.image));
+  console.log('User images:', users.map(u => u.image));
 
   const usedPublicIds = new Set(
     [...places, ...users]
       .map((doc) => extractPublicId(doc.image))
       .filter(Boolean)
   );
-
+  // ✅ Debug — print what IDs were found
+  console.log('Used public IDs:', [...usedPublicIds]);
   console.log(`Found ${usedPublicIds.size} images referenced in the database.`);
 
   let nextCursor = undefined;
