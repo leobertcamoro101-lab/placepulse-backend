@@ -11,7 +11,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'placepulse',
+    folder: 'mern',
     allowed_formats: ['jpg', 'jpeg', 'png'],
   },
 });
