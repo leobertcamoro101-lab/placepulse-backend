@@ -1,5 +1,5 @@
 require("node:dns/promises").setServers(["1.1.1.1", "8.8.8.8"]); // << if error connection do this
-
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 
